@@ -1,0 +1,285 @@
+# CRM — Sistema de gestión de servicios
+
+Aplicación web desarrollada con Node.js, Express, EJS, Sequelize y MySQL para gestionar clientes, técnicos, tickets de servicio, unidades, equipos y accesorios.
+
+El sistema permite registrar servicios, asignar técnicos y unidades, administrar catálogos, dar seguimiento al estado de los tickets y consultar sus detalles, incluyendo fotografías asociadas.
+
+## Características principales
+
+### Gestión de clientes y técnicos
+- Registro, consulta, edición y eliminación de clientes.
+- Administración de técnicos y sus datos de contacto.
+- Gestión del estado de los técnicos.
+
+### Gestión de tickets de servicio
+- Registro y consulta de tickets.
+- Asociación de tickets con clientes y técnicos.
+- Administración del tipo de servicio y su estado.
+- Seguimiento de tickets en espera, en seguimiento y finalizados.
+- Reapertura y finalización de tickets.
+- Actualización de comentarios y enlaces de ubicación.
+- Consulta de los detalles de cada ticket.
+- Carga de fotografías asociadas a un ticket.
+
+### Gestión de unidades y equipos
+- Administración de catálogos de unidades y equipos.
+- Registro de equipos disponibles.
+- Asignación de equipos a unidades.
+- Asociación de unidades con tickets.
+- Consulta de unidades y equipos pendientes de asignación.
+- Desvinculación de equipos y accesorios.
+
+### Gestión de accesorios
+- Administración del catálogo de accesorios.
+- Asociación de accesorios con unidades.
+- Consulta y mantenimiento de los accesorios disponibles.
+
+### Dashboard
+- Vista principal del sistema.
+- Consulta del estado de los tickets.
+- Visualización de información relacionada con los servicios.
+
+## Tecnologías utilizadas
+
+| Tecnología | Uso |
+|---|---|
+| Node.js | Entorno de ejecución de JavaScript |
+| Express 5 | Servidor y manejo de rutas HTTP |
+| EJS | Renderizado de vistas del lado del servidor |
+| MySQL | Base de datos relacional |
+| Sequelize 6 | ORM para interactuar con MySQL |
+| mysql2 | Conector de MySQL para Node.js |
+| Bootstrap 5 | Componentes y estilos de interfaz |
+| Multer | Recepción de archivos y fotografías |
+| dotenv | Lectura de variables de entorno |
+| Nodemon | Reinicio automático durante el desarrollo |
+
+## Requisitos previos
+
+Antes de instalar el proyecto, necesitas:
+
+- Node.js y npm.
+- MySQL Server.
+- Un cliente para administrar MySQL, como MySQL Workbench.
+- Git, si deseas clonar el repositorio.
+
+## Instalación
+
+### 1. Clonar el repositorio
+
+```bash
+git clone URL_DEL_REPOSITORIO
+```
+
+Entra a la carpeta del proyecto:
+
+```bash
+cd CRM
+```
+
+Sustituye `URL_DEL_REPOSITORIO` por la dirección real del repositorio de GitHub.
+
+### 2. Instalar dependencias
+
+```bash
+npm install
+```
+
+Este comando instala las dependencias declaradas en `package.json`.
+
+### 3. Crear la base de datos
+
+Abre MySQL Workbench y cra la BD.
+
+### 4. Configurar las variables de entorno
+
+Crea un archivo `.env` en la raíz del proyecto.
+
+Utiliza la siguiente estructura como referencia:
+
+```dotenv
+DB_NAME=crmtest
+DB_USER=tu_usuario
+DB_PASSWORD=tu_contraseña
+```
+
+Reemplaza los valores de ejemplo por los correspondientes a tu instalación de MySQL.
+
+El archivo `config/db.js` utiliza estas variables para establecer la conexión con la base de datos. Actualmente, el host está configurado como `localhost`.
+
+
+### 5. Iniciar la aplicación
+
+Para iniciar el servidor:
+
+```bash
+npm start
+```
+
+Para ejecutar el proyecto en modo desarrollo, con reinicio automático mediante Nodemon:
+
+```bash
+npm run dev
+```
+
+Por defecto, la aplicación escucha en el puerto `3030`.
+
+Abre la siguiente dirección en el navegador:
+
+http://localhost:3030
+
+## Estructura del proyecto
+
+```text
+CRM/
+├── config/
+│   └── db.js
+├── controllers/
+│   ├── catalogo_accesorios_controller.js
+│   ├── catalogo_equipos_controller.js
+│   ├── catalogo_unidades_controller.js
+│   ├── clientes_controller.js
+│   ├── dashboard_controller.js
+│   ├── equipos_controller.js
+│   ├── tecnicos_controller.js
+│   ├── tickets_controller.js
+│   └── unidades_controller.js
+├── models/
+│   ├── Accesorio_stock.js
+│   ├── Cliente.js
+│   ├── Equipos.js
+│   ├── Equipo_stock.js
+│   ├── index.js
+│   ├── Tecnicos.js
+│   ├── Tickets.js
+│   ├── Ticket_foto.js
+│   ├── Unidades.js
+│   ├── Unidad_Accesorio.js
+│   └── Unidad_stock.js
+├── public/
+│   ├── css/
+│   ├── scripts/
+│   └── uploads/
+│       └── tickets/
+├── routes/
+│   ├── accesorioRoutes.js
+│   ├── clienteRoutes.js
+│   ├── equipoRoutes.js
+│   ├── index.js
+│   ├── tecnicoRoutes.js
+│   ├── ticketRoutes.js
+│   └── unidadRoutes.js
+├── services/
+│   ├── catalogoAccesorioService.js
+│   ├── catalogoEquipoService.js
+│   ├── catalogoUnidadService.js
+│   ├── clienteService.js
+│   ├── dashboardService.js
+│   ├── equipoService.js
+│   ├── tecnicoService.js
+│   ├── ticketService.js
+│   └── unidadService.js
+├── views/
+│   ├── accesorios_catalogo.ejs
+│   ├── asignacion_equipos.ejs
+│   ├── asignacion_unidades.ejs
+│   ├── clientes.ejs
+│   ├── detalles_servicio.ejs
+│   ├── equipos_catalogo.ejs
+│   ├── estado_tickets.ejs
+│   ├── index.ejs
+│   ├── registro_equipos.ejs
+│   ├── tecnicos.ejs
+│   ├── tickets.ejs
+│   └── unidades_catalogo.ejs
+├── .env.example
+├── .gitignore
+├── app.js
+├── CRM.sql
+├── package.json
+└── package-lock.json
+```
+
+### Organización del código
+
+- **`config/`**: configuración de la conexión con la base de datos.
+- **`controllers/`**: reciben las solicitudes, coordinan las operaciones y determinan las respuestas.
+- **`models/`**: definen las entidades de Sequelize y sus relaciones.
+- **`routes/`**: declaran las rutas HTTP de la aplicación.
+- **`services/`**: concentran las operaciones y consultas de negocio.
+- **`views/`**: contienen las plantillas EJS que generan las páginas.
+- **`public/css/`**: hojas de estilo.
+- **`public/scripts/`**: JavaScript del navegador para formularios, asignaciones e interacción con la interfaz.
+- **`public/uploads/tickets/`**: ubicación utilizada para almacenar fotografías de los tickets.
+- **`CRM.sql`**: script de creación de la base de datos y sus tablas.
+
+## Base de datos
+
+La base de datos utilizada por el proyecto se llama `crmtest`.
+
+Entre las principales tablas se encuentran:
+
+| Tabla | Propósito |
+|---|---|
+| `Cliente` | Información de los clientes |
+| `Tecnicos` | Información de los técnicos |
+| `Tickets` | Registro y estado de los servicios |
+| `Unidades` | Unidades asociadas a los servicios |
+| `Unidades_catalogo` | Catálogo de modelos de unidades |
+| `Equipos` | Equipos registrados |
+| `Equipos_catalogo` | Catálogo de modelos de equipos |
+| `Accesorios` | Accesorios registrados |
+| `Accesorios_catalogo` | Catálogo de accesorios |
+| `Unidad_Accesorio` | Relación entre unidades y accesorios |
+| `Ticket_fotos` | Fotografías asociadas a tickets |
+
+Las relaciones entre las entidades permiten consultar los datos relacionados con cada servicio.
+
+## Carga de fotografías
+
+El proyecto utiliza Multer para recibir fotografías asociadas a tickets.
+
+Las fotografías se guardan en `public/uploads/tickets/`. La ruta de cada archivo y su nombre original se registran en `Ticket_fotos`.
+
+Al respaldar o trasladar el proyecto, recuerda conservar los archivos que necesites y respaldar la base de datos. La base de datos y las fotografías son recursos separados.
+
+## Git y GitHub
+
+El archivo `.gitignore` debe excluir, como mínimo:
+
+- `node_modules/`
+- `.env`
+- Logs y archivos temporales.
+- Archivos privados que no deban formar parte del repositorio.
+
+No es necesario subir `node_modules`, ya que las dependencias pueden instalarse con `npm install`.
+
+El archivo `.env.example` sirve como referencia de configuración y no debe contener contraseñas reales.
+
+## Solución de problemas
+
+### No se conecta a MySQL
+
+1. Verifica que MySQL Server esté iniciado.
+2. Revisa los valores de `DB_NAME`, `DB_USER` y `DB_PASSWORD` en `.env`.
+3. Confirma que la base de datos `crmtest` exista.
+4. Comprueba que el usuario tenga permisos para acceder a ella.
+
+### No se encuentra una tabla
+
+Verifica que ejecutaste `CRM.sql` y que las tablas estén creadas en la base de datos configurada.
+
+Puedes consultar las tablas con:
+
+```sql
+USE crmtest;
+SHOW TABLES;
+```
+
+### No se muestran las fotografías
+
+Comprueba que los archivos existan en la carpeta de cargas y que las rutas almacenadas en `Ticket_fotos` coincidan con la forma en que la aplicación sirve los archivos estáticos.
+
+### El servidor no inicia
+
+Revisa la terminal para identificar el error. Confirma que instalaste las dependencias y que la configuración de la base de datos sea correcta.
